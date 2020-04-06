@@ -2,25 +2,25 @@ import axios from 'axios';
 import regeneratorRuntime from "regenerator-runtime"
 export default {
     state: {
-        characters: 'check'
+        pokemons: 'check'
     },
     getters: {
-        getCharacters: state => state.characters 
+        getPokemons: state => state.pokemons
     },
     mutations: {
-        SET_CHARACTERS(state, data) {
-            state.characters = data
+        SET_POKEMONS(state, data) {
+            state.pokemons= data
         }
     },
     actions: {
         async fetchCharacters({ commit }) {
-            const response = await axios.get('https://pokeapi.co/api/v2/pokemon',{
-                params:{
-                    limit:20,
-                    offset:0
-                }
-            })
-            commit('SET_CHARACTERS', response.data)    
+            let pokemonsArray=[];
+            for(let i=1; i<20; i++){
+                const url=`https://pokeapi.co/api/v2/pokemon/${i}`;
+                const response = await axios.get(url)
+                pokemonsArray.push(response.data)
+            } 
+            commit('SET_POKEMONS', pokemonsArray)   
         },
     }
 }

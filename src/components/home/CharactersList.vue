@@ -1,11 +1,6 @@
 <template>
 <div>   
-        <div v-for="pokemon in getCharacters.results" >
-         {{pokemon.name}}
-         {{pokemon.id}}
-         <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png">
-        <SingleItem :url="pokemon.url"></SingleItem>
-       </div>
+    <div>{{getPokemons}}</div>
 </div>
 </template>
 
@@ -17,7 +12,7 @@
             SingleItem
         },
         computed: {
-            ...mapGetters(['getCharacters']),
+            ...mapGetters(['getPokemons']),
         },
         created() {
             this.$store.dispatch("fetchCharacters")
