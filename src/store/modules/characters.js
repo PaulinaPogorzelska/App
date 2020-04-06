@@ -17,7 +17,7 @@ export default {
             const response = await axios.get('https://pokeapi.co/api/v2/pokemon',{
                 params:{
                     limit:20,
-                    offset:10
+                    offset:0
                 }
             })
             commit('SET_CHARACTERS', response.data)    
