@@ -1,12 +1,12 @@
 <template>
-    <CharactersList></CharactersList>
+    <PokemonsList></PokemonsList>
 </template>
 
 <script>
-    import CharactersList from '../components/home/CharactersList.vue'
+    import PokemonsList from '../components/home/PokemonsList.vue'
     export default{
         components:{
-            CharactersList
+            PokemonsList
         }
     }
 </script>

@@ -13,14 +13,14 @@ export default {
         }
     },
     actions: {
-        async fetchCharacters({ commit }) {
-            let pokemonsArray=[];
-            for(let i=1; i<20; i++){
-                const url=`https://pokeapi.co/api/v2/pokemon/${i}`;
-                const response = await axios.get(url)
-                pokemonsArray.push(response.data)
-            } 
-            commit('SET_POKEMONS', pokemonsArray)   
-        },
+        async fetchPokemons({ commit }){
+            const response = await axios.get('https://pokeapi.co/api/v2/pokemon/',{
+                params:{
+                    limit:20,
+                    offset:0
+                }
+            })
+            commit('SET_POKEMONS', response.data)   
+        }
     }
 }
