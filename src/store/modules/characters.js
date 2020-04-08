@@ -13,25 +13,22 @@ export default {
         }
     },
     actions: {
-        async fetchPokemons({ commit }){
-            let pokeArray=[]
-            commit('SET_POKEMONS', pokeArray)
+        fetchPokemons({ commit }){
             function fetchPokemonData(pokemon){
                 let url = pokemon.url
                   fetch(url)
                   .then(response => response.json())
                   .then(function(pokeData){
-                    pokeArray.push(pokeData)
+                  console.log(pokeData)
                   })
                 }
-            const response = await axios.get('https://pokeapi.co/api/v2/pokemon/',{
-                params:{
-                    limit:20,
-                    offset:0
-                }
-            }).then(response => response.data).then(function(allpokemon){
-                allpokemon.results.forEach(function(pokemon){fetchPokemonData(pokemon)})
-            })
-        }
+                fetch('https://pokeapi.co/api/v2/pokemon?limit=151')
+                 .then(response => response.json())
+                 .then(function(allpokemon){
+                 allpokemon.results.forEach(function(pokemon){
+                   fetchPokemonData(pokemon); 
+                 })
+                })
+        }    
     }
 }
