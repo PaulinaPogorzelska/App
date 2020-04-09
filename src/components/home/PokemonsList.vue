@@ -1,12 +1,7 @@
 <template>
 <div>   
-    <input v-model="searchName" type="text"> FIND POKE</input>
-    <button @click="show=true">Chose type</button>
-    <div v-if="show" class="x"></div>
-    <div v-for="pokemon in filterByName">{{pokemon.name}}
-    <img :src="pokemon.sprites.front_default">
-    </div>
-    
+    <input type="checkbox" value="poison" v-model="findCheckBox"></input>
+    <div v-for="pokemon in filterByBox">{{pokemon.name}}{{pokemon.id}}</div>
 </div>
 </template>
 
@@ -15,15 +10,21 @@
     export default{
         data(){
             return{
-                show:false,
-                searchName:""
+                array1:[1,2,3],
+                array2:[2,4],
+                findCheckBox:[]
             }
+        },
+        methods: {
         },
         computed: {
             ...mapGetters(['getPokemons']),
-            filterByName(){
+            filterByBox(){
                 return this.getPokemons.filter(pokemon =>{
-                    return pokemon.name.includes(this.searchName.toLowerCase())
+                    let SinglePokemonTypes = []
+                    pokemon.types.forEach(function(entry){SinglePokemonTypes.push(entry.type.name)})
+                    const found = this.findCheckBox.some(r=> SinglePokemonTypes.includes(r))
+                    return found
                 })
             }
         },
@@ -34,7 +35,7 @@
 </script>
 
 <style scoped>
-    input{
+    .name{
         margin: 20px;
         width:200px;
         height:26px;
@@ -44,5 +45,6 @@
         widht:100px;
         height:100px;
         background-color:black;
+        color:white;
     }
 </style>
