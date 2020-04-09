@@ -1,38 +1,30 @@
 import axios from 'axios';
-import regeneratorRuntime from "regenerator-runtime"
 export default {
     state: {
-        pokemons: 'check'
+        pokemons: []
     },
     getters: {
         getPokemons: state => state.pokemons
     },
     mutations: {
-        SET_POKEMONS(state, data) {
-            state.pokemons= data
+        ADD_POKEMON(state, pokemon) {
+            state.pokemons.push(pokemon)
         }
     },
     actions: {
-        async fetchPokemons({ commit }){
-            let pokeArray=[]
-            console.log(pokeArray)
-            commit('SET_POKEMONS', pokeArray)
-            function fetchPokemonData(pokemon){
-                let url = pokemon.url
-                  fetch(url)
-                  .then(response => response.json())
-                  .then(function(pokeData){
-                    pokeArray.push(pokeData)
-                  })
-                }
-            const response = await axios.get('https://pokeapi.co/api/v2/pokemon/',{
-                params:{
-                    limit:20,
-                    offset:0
-                }
-            }).then(response => response.data).then(function(allpokemon){
-                allpokemon.results.forEach(function(pokemon){fetchPokemonData(pokemon)})
-            })
+        async fetchSinglePokemon({ commit }, url) {
+            const response = await axios.get(url);
+            commit('ADD_POKEMON', response.data);
+        },
+        async fetchPokemons({ dispatch }) {
+            const response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=20');
+            let pokemons = response.data.results;
+            if (pokemons) {
+                pokemons.forEach(pokemon => {
+                    dispatch('fetchSinglePokemon', pokemon.url);
+                })
+            }
+
         }
     }
 }
