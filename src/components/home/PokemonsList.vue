@@ -1,7 +1,13 @@
 <template>
 <div>   
-    <input type="checkbox" value="poison" v-model="findCheckBox"></input>
-    <div v-for="pokemon in filterByBox">{{pokemon.name}}{{pokemon.id}}</div>
+    <input v-model="findByName" type="text"> FIND POKE</input>
+    <div class="wrapCheckbox">
+        <label><input type="checkbox" v-model="showAll">show all</label>
+        <div v-for="type in pokemonTypes" class="checkbox">
+        <label :for="type"><input type="checkbox" :value="type" v-model="findCheckBox">{{type}}</label>
+        </div>
+    </div>
+    <div v-for="pokemon in filterPokemonList">{{pokemon.name}}{{pokemon.id}}</div>
 </div>
 </template>
 
@@ -10,21 +16,22 @@
     export default{
         data(){
             return{
-                array1:[1,2,3],
-                array2:[2,4],
-                findCheckBox:[]
+                pokemonTypes:['normal','fire','fighting','water','flying','grass','poison','electric','ground','psychic','rock','ice',
+                'bug','dragon','ghost','dark','steel','fairy'],
+                findCheckBox:[],
+                findByName:'',
+                showAll:'true'
             }
         },
         methods: {
         },
         computed: {
             ...mapGetters(['getPokemons']),
-            filterByBox(){
+            filterPokemonList(){
                 return this.getPokemons.filter(pokemon =>{
                     let SinglePokemonTypes = []
-                    pokemon.types.forEach(function(entry){SinglePokemonTypes.push(entry.type.name)})
-                    const found = this.findCheckBox.some(r=> SinglePokemonTypes.includes(r))
-                    return found
+                    pokemon.types.forEach(el=>SinglePokemonTypes.push(el.type.name))
+                    return this.findCheckBox.some(el=> SinglePokemonTypes.includes(el)) && pokemon.name.includes(this.findByName.toLowerCase()) || this.showAll
                 })
             }
         },
@@ -40,11 +47,13 @@
         width:200px;
         height:26px;
     }
+    .checkbox{
+        display:inline-block;
+        width:80px;
+    }
 
-    .x{
-        widht:100px;
-        height:100px;
-        background-color:black;
-        color:white;
+    .wrapCheckbox{
+        width:507px;
+        hirght:150px;
     }
 </style>

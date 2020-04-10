@@ -17,7 +17,7 @@ export default {
             commit('ADD_POKEMON', response.data);
         },
         async fetchPokemons({ dispatch }) {
-            const response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=20');
+            const response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=10');
             let pokemons = response.data.results;
             if (pokemons) {
                 pokemons.forEach(pokemon => {
