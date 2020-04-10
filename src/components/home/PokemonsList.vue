@@ -1,5 +1,5 @@
 <template>
-<div>   
+<div> 
     <input v-model="findByName" type="text"> FIND POKE</input>
     <div class="wrapCheckbox">
         <label><input type="checkbox" v-model="showAll">show all</label>
@@ -7,7 +7,9 @@
         <label :for="type"><input type="checkbox" :value="type" v-model="findCheckBox">{{type}}</label>
         </div>
     </div>
-    <div v-for="pokemon in filterPokemonList">{{pokemon.name}}{{pokemon.id}}</div>
+    <div v-for="pokemon in paginatedData()">{{pokemon.name}}</div>
+    <button @click="prevPage">Previous</button>
+    <button @click="nextPage">Next</button>
 </div>
 </template>
 
@@ -20,10 +22,23 @@
                 'bug','dragon','ghost','dark','steel','fairy'],
                 findCheckBox:[],
                 findByName:'',
-                showAll:'true'
+                showAll:'true',
+                pageNumber: 0,
+                size:5,
             }
         },
         methods: {
+            paginatedData(){
+                let start = this.pageNumber * this.size;
+                let end = start + this.size;
+                return this.filterPokemonList.slice(start, end)
+            },
+            nextPage(){
+                this.pageNumber++;
+            },
+            prevPage(){
+                this.pageNumber--;
+            }
         },
         computed: {
             ...mapGetters(['getPokemons']),
@@ -42,18 +57,4 @@
 </script>
 
 <style scoped>
-    .name{
-        margin: 20px;
-        width:200px;
-        height:26px;
-    }
-    .checkbox{
-        display:inline-block;
-        width:80px;
-    }
-
-    .wrapCheckbox{
-        width:507px;
-        hirght:150px;
-    }
 </style>
