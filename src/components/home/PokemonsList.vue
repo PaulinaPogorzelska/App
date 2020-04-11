@@ -34,10 +34,12 @@
                 return this.filterPokemonList.slice(start, end)
             },
             nextPage(){
-                this.pageNumber++;
+                if(this.pageNumber + 1 < this.filterPokemonList.length / this.size){
+                    this.pageNumber++
+                }
             },
             prevPage(){
-                this.pageNumber--;
+                if(this.pageNumber>0){this.pageNumber--;}
             }
         },
         computed: {
@@ -46,7 +48,7 @@
                 return this.getPokemons.filter(pokemon =>{
                     let SinglePokemonTypes = []
                     pokemon.types.forEach(el=>SinglePokemonTypes.push(el.type.name))
-                    return this.findCheckBox.some(el=> SinglePokemonTypes.includes(el)) && pokemon.name.includes(this.findByName.toLowerCase()) || this.showAll
+                    return pokemon.name.includes(this.findByName.toLowerCase()) && (this.showAll || this.findCheckBox.some(el=> SinglePokemonTypes.includes(el)))
                 })
             }
         },
@@ -57,4 +59,12 @@
 </script>
 
 <style scoped>
+    .wrapCheckbox{
+        width:507px;
+        hirght:150px;
+    }
+        .checkbox{
+        display:inline-block;
+        width:80px;
+    }
 </style>
