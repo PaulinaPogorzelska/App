@@ -1,5 +1,5 @@
 <template>
-<div> 
+<div class="wrapList"> 
     <input v-model="findByName" type="text"> FIND POKE</input>
     <div class="wrapCheckbox">
         <label><input type="checkbox" v-model="showAll">show all</label>
@@ -71,4 +71,12 @@
         display:inline-block;
         width:80px;
     }
+    /*odtąd zacznają się dobre style*/
+
+    .wrapList{
+        background-image: url("../../assets/pikachu.jpg");
+        background-color: #fed732;
+        min-height: 100vh;
+    }
+    
 </style>
