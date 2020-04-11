@@ -7,7 +7,7 @@
         <label :for="type"><input type="checkbox" :value="type" v-model="findCheckBox">{{type}}</label>
         </div>
     </div>
-    <div v-for="pokemon in paginatedData()">{{pokemon.name}}</div>
+    <SinglePokemon v-for="(pokemon,key) in paginatedData()" :key="key" :pokemon="pokemon"></SinglePokemon>
     <button @click="prevPage">Previous</button>
     <button @click="nextPage">Next</button>
 </div>
@@ -15,6 +15,7 @@
 
 <script>
     import { mapGetters } from 'vuex'
+    import SinglePokemon from './SinglePokemon.vue'
     export default{
         data(){
             return{
@@ -52,9 +53,12 @@
                 })
             }
         },
+        components:{
+            SinglePokemon
+        },
         created() {
             this.$store.dispatch("fetchPokemons")
-        }
+        },
     }
 </script>
 
