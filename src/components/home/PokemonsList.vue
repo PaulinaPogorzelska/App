@@ -25,7 +25,7 @@
                 findByName:'',
                 showAll:'true',
                 pageNumber: 0,
-                size:5,
+                size:10,
             }
         },
         methods: {
