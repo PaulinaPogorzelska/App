@@ -1,22 +1,25 @@
 <template>
 <div class="wrapSinglePokemon">
-    <h3>{{this.pokemon.name}}<span @click="addToFavourite"><img src="src/assets/pokeball.png" :class="{favourite:belongToFav }"></span></h3>
+    <h3>{{this.pokemon.name}}<span @click="addToFav(pokemon.id)"><img :src="pokemon.imageFav"></span></h3>
     <img :src="'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + this.pokemon.id +'.png'"><img>
 </div>
 </template>
 
 <script>
+    import { mapGetters } from 'vuex'
     export default{
-        data(){
-            return{
-                belongToFav:false
-            }
-        },
         props:['pokemon'],
+        computed:{
+            ...mapGetters(['getFavouritesPokemons'])
+        },
         methods: {
-            addToFavourite(){
-                this.pokemon.favouriteFlag =!this.pokemon.favouriteFlag
-                this.belongToFav = this.pokemon.favouriteFlag
+            addToFav(pokeId){
+                this.$store.commit('ADD_TO_FAVOURITES', pokeId)
+                console.log(this.getFavouritesPokemons)
+                let check = this.getFavouritesPokemons.some(el=> el.id == this.pokemon.id)
+                if(check){
+                    this.pokemon.imageFav ='src/assets/pokeball2.png'
+                }
             }
         }
     }
@@ -53,7 +56,7 @@
     } 
 
     .wrapSinglePokemon h3 img{
-        width:64px;
+        width:32px;
     } 
 
     .favourite{
