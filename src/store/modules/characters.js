@@ -14,6 +14,7 @@ export default {
     actions: {
         async fetchSinglePokemon({ commit }, url) {
             const response = await axios.get(url);
+            response.data.favouriteFlag = false
             commit('ADD_POKEMON', response.data);
         },
         async fetchPokemons({ dispatch }) {

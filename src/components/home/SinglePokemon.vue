@@ -1,6 +1,6 @@
 <template>
 <div class="wrapSinglePokemon">
-    <h3>{{this.pokemon.name}}<span @click="addToFavourite"><img src="src/assets/pokeball.png" :class="{favourite: addedToFavourite}"></span></h3>
+    <h3>{{this.pokemon.name}}<span @click="addToFavourite"><img src="src/assets/pokeball.png" :class="{favourite:belongToFav }"></span></h3>
     <img :src="'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + this.pokemon.id +'.png'"><img>
 </div>
 </template>
@@ -9,13 +9,14 @@
     export default{
         data(){
             return{
-                addedToFavourite:false
+                belongToFav:false
             }
         },
         props:['pokemon'],
         methods: {
             addToFavourite(){
-                this.addedToFavourite=!this.addedToFavourite
+                this.pokemon.favouriteFlag =!this.pokemon.favouriteFlag
+                this.belongToFav = this.pokemon.favouriteFlag
             }
         }
     }
