@@ -1,29 +1,31 @@
 import axios from 'axios';
+import regeneratorRuntime from "regenerator-runtime"
 export default {
     state: {
         pokemons: [],
-        favouritesPokemons:[]
     },
     getters: {
         getPokemons: state => state.pokemons,
-        getFavouritesPokemons: state => state.favouritesPokemons
+        getFavouritesPokemons: state => state.pokemons.filter(el => el.isFavourite === true),
+        isFavouritePokemon: state => pokemonId => state.pokemons.find(el => el.id == pokemonId).isFavourite
     },
     mutations: {
         ADD_POKEMON(state, pokemon) {
             state.pokemons.push(pokemon)
         },
-        ADD_TO_FAVOURITES(state, pokeId){
-            let fav = state.favouritesPokemons.find(el => el.id == pokeId)
-            if (!fav) {
-            let newFav = state.pokemons.find(el => el.id == pokeId);
-            state.favouritesPokemons.push(newFav)
-        }
+        TOGGLE_IS_FAVOURITE(state, pokemonId) {
+            let pokemons = [...state.pokemons];
+            let pokemon = pokemons.find(el => el.id == pokemonId)
+            if (pokemon) {
+                pokemon.isFavourite = !pokemon.isFavourite;
+                state.pokemons = [...pokemons];
+            }
         }
     },
     actions: {
         async fetchSinglePokemon({ commit }, url) {
             const response = await axios.get(url);
-            response.data.imageFav = 'src/assets/pokeball1.png'
+            response.data.isFavourite = false
             commit('ADD_POKEMON', response.data);
         },
         async fetchPokemons({ dispatch }) {
