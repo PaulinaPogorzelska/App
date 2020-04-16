@@ -31,7 +31,7 @@
                 showAll:true,
                 checkboxActive:false,
                 pageNumber: 1,
-                size:6,
+                size:8,
             }
         },
         methods: {
@@ -44,7 +44,7 @@
                 this.pageNumber++
             },
             isDisabledNext(){
-               return this.pageNumber >= Math.ceil(this.getPokemons.length / this.size)
+               return this.pageNumber >= Math.ceil(this.filterPokemonList.length / this.size)
             },
             prevPage(){
                 this.pageNumber--
@@ -113,9 +113,8 @@
     }
 
     .pokemons{
-        display:flex;
-        flex-wrap:wrap;
-        margin-top:5px;
+        display:grid;
+        grid-template-columns: auto auto;
     }
 
     .inputName {
@@ -161,9 +160,66 @@
 
     button{
         width:80px;
-        margin:3px;
+        margin: 3% 1%;
         padding:5px 0;
         border-radius:20px;
         border:1px solid #3b659b;
     }
+@media(min-width:768px){
+    .pokemons{
+        grid-template-columns: auto auto auto;
+    }
+
+    .wrapCheckbox{
+        height:35px;
+        transition:1s;
+    }
+
+    .wrapCheckbox p{
+        font-size:17px;
+        line-height:35px;
+    }
+
+    .slide{
+        transition:1s;
+        height:170px;
+    }
+
+    .inputName{
+        height:50px;
+        line-height:50px;
+    }
+
+    .inputName label{
+        font-size:18px;
+    }
+
+    button{
+        width:120px;
+        font-size:17px;
+        margin: 3% 1% 0 0;
+    }
+}
+
+@media(min-width:992px){
+     .wrapList{
+        padding:65px 4%;
+    }
+
+    .inputName{
+        margin-bottom:1%;
+        margin-left:15%
+    }
+
+    .wrapCheckbox{
+        width:70%;
+        margin:auto;
+    }
+}
+
+@media(min-width:1025px){
+    .pokemons{
+        grid-template-columns: auto auto auto auto;
+    }
+}
 </style>

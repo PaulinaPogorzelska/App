@@ -35,8 +35,9 @@ export default {
 
 <style scoped>
 .wrapSinglePokemon {
-  width: 49%;
-  margin: 0.5%;
+  width: 96%;
+  justify-self:center;
+  margin-top:2%;
   color: rgb(32, 35, 41);
   background-color: #fcf5f5;
   border: 1px solid yellow;
@@ -90,5 +91,17 @@ export default {
     float:right;
     color:#396bba;
     font-weight:600;
+}
+
+@media(min-width:768px){  
+   .wrapSinglePokemon p{
+      line-height:26px;
+    }
+}
+
+@media(min-width:992px){
+    .wrapSinglePokemon p{
+      line-height:28px;
+    }
 }
 </style>

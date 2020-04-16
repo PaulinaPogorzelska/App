@@ -14,11 +14,21 @@
         z-index:1;
         width:100%;
         height:50px;
-        
     }
+
     img{
         height:90%;
         display:block;
         margin:2px auto;
     }
+
+@media(min-width:992px){
+        div{
+        height:60px;
+    }
+        img{
+        height:80%;
+    }
+}
+
 </style>
