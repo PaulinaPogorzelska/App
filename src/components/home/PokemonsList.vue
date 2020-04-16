@@ -5,7 +5,7 @@
         <label for="name">Type pokemon name:</label>
     </div>
         <div class="wrapCheckbox" :class={slide:checkboxActive}>
-            <p @click="checkboxActive=!checkboxActive">Choose type <i class="fas fa-chevron-down"></i></p>
+            <p @click="checkboxActive=!checkboxActive">Choose type <i class="fas fa-chevron-down" :class={turnArrow:checkboxActive}></i></p>
             <label><input type="checkbox" v-model="showAll">show all</label>
             <label v-for="type in pokemonTypes" class="checkbox" :for="type"><input type="checkbox" :value="type" v-model="findCheckBox">{{type}}</label>
         </div>
@@ -110,6 +110,10 @@
     .slide{
         transition:1s;
         height:160px;
+    }
+
+    .turnArrow{
+        transform: rotate(180deg);
     }
 
     .pokemons{
