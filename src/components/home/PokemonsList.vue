@@ -1,3 +1,9 @@
+// W api brak jest metod do uzyskiwania w liście filtrowania,
+// stąd zastosowana została paginacja na froncie.
+// Budowa Api uniemożliwia zastosowanie paginacji z użyciem limitu i offsetu, 
+// gdzie dane pobierane byłyby w małych częściach, gdyż to uniemożliwiłoby filtrowanie.
+
+
 <template>
 <div class="wrapList"> 
     <div class="inputName">
