@@ -13,7 +13,7 @@
         <div class="wrapCheckbox" :class={slide:checkboxActive}>
             <p @click="checkboxActive=!checkboxActive">Choose type <i class="fas fa-chevron-down" :class={turnArrow:checkboxActive}></i></p>
             <label><input type="checkbox" v-model="showAll">show all</label>
-            <label v-for="type in pokemonTypes" class="checkbox" :for="type"><input type="checkbox" :value="type" v-model="findCheckBox">{{type}}</label>
+            <label v-for="type in pokemonTypes" class="checkbox" :for="type"  @click="resetPage"><input type="checkbox" :value="type" v-model="findCheckBox">{{type}}</label>
         </div>
     </transition>
     <div class="pokemons">
@@ -41,6 +41,10 @@
             }
         },
         methods: {
+            resetPage(){
+                this.pageNumber=1
+                console.log(this.pageNumber)
+            },
             paginatedData(){
                 let start = (this.pageNumber * this.size) - this.size;
                 let end = start + this.size;
