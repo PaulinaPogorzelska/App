@@ -6,9 +6,10 @@
         <img src="src/assets/pokeball.png" :class="{favourite: isFavouritePokemon(pokemon.id)}" />
       </span>
     </h3>
-    <img
-      :src="'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + this.pokemon.id +'.png'"
-    />
+    <img :src="this.pokemon.sprites.front_default"/>
+    <p>weight<span>{{this.pokemon.weight}}</span> </p>
+    <p>height <span>{{this.pokemon.height}}</span></p>
+    <p>types <span>{{singlePokeTypes}}</span></p>
   </div>
 </template>
 
@@ -17,7 +18,12 @@ import { mapGetters } from "vuex";
 export default {
   props: ["pokemon"],
   computed: {
-    ...mapGetters(["isFavouritePokemon"])
+    ...mapGetters(["isFavouritePokemon"]),
+    singlePokeTypes(){
+      let singlePokeTypes=[]
+      this.pokemon.types.forEach(el=> singlePokeTypes.push(el.type.name))
+      return singlePokeTypes.join(', ')
+    }
   },
   methods: {
     toogleIsFavourite(pokeId) {
@@ -35,7 +41,7 @@ export default {
   background-color: #fcf5f5;
   border: 1px solid yellow;
   border-radius: 5px;
-  float: left;
+ 
 }
 
 .wrapSinglePokemon h3 {
@@ -67,5 +73,22 @@ export default {
 .wrapSinglePokemon h3 + img {
   display: block;
   margin: auto;
+}
+
+.wrapSinglePokemon p{
+    margin:0 3%;
+    border-bottom:1px solid #777;
+    line-height:23px;
+    font-size:14px;
+}
+
+.wrapSinglePokemon p:last-child{
+    border:0;
+}
+
+.wrapSinglePokemon p span{
+    float:right;
+    color:#396bba;
+    font-weight:600;
 }
 </style>

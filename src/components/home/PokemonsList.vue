@@ -1,15 +1,20 @@
 <template>
 <div class="wrapList"> 
-    <input v-model="findByName" type="text"> FIND POKE</input>
-    <div class="wrapCheckbox">
-        <label><input type="checkbox" v-model="showAll">show all</label>
-        <div v-for="type in pokemonTypes" class="checkbox">
-        <label :for="type"><input type="checkbox" :value="type" v-model="findCheckBox">{{type}}</label>
-        </div>
+    <div class="inputName">
+        <input type="text" id="name" required v-model="findByName">
+        <label for="name">Type pokemon name:</label>
     </div>
-    <SinglePokemon v-for="(pokemon,key) in paginatedData()" :key="key" :pokemon="pokemon"></SinglePokemon>
-    <button @click="prevPage">Previous</button>
-    <button @click="nextPage">Next</button>
+        <div class="wrapCheckbox" :class={slide:checkboxActive}>
+            <p @click="checkboxActive=!checkboxActive">Choose type <i class="fas fa-chevron-down"></i></p>
+            <label><input type="checkbox" v-model="showAll">show all</label>
+            <label v-for="type in pokemonTypes" class="checkbox" :for="type"><input type="checkbox" :value="type" v-model="findCheckBox">{{type}}</label>
+        </div>
+    </transition>
+    <div class="pokemons">
+        <SinglePokemon v-for="(pokemon,key) in paginatedData()" :key="key" :pokemon="pokemon"></SinglePokemon>
+    </div>
+    <button @click="prevPage" :disabled="isDisabledPrev()">Previous</button>
+    <button @click="nextPage" :disabled="isDisabledNext()">Next</button>
 </div>
 </template>
 
@@ -23,24 +28,29 @@
                 'bug','dragon','ghost','dark','steel','fairy'],
                 findCheckBox:[],
                 findByName:'',
-                showAll:'true',
-                pageNumber: 0,
-                size:4,
+                showAll:true,
+                checkboxActive:false,
+                pageNumber: 1,
+                size:6,
             }
         },
         methods: {
             paginatedData(){
-                let start = this.pageNumber * this.size;
+                let start = (this.pageNumber * this.size) - this.size;
                 let end = start + this.size;
                 return this.filterPokemonList.slice(start, end)
             },
             nextPage(){
-                if(this.pageNumber + 1 < this.filterPokemonList.length / this.size){
-                    this.pageNumber++
-                }
+                this.pageNumber++
+            },
+            isDisabledNext(){
+               return this.pageNumber >= Math.ceil(this.getPokemons.length / this.size)
             },
             prevPage(){
-                if(this.pageNumber>0){this.pageNumber--;}
+                this.pageNumber--
+            },
+            isDisabledPrev(){
+                return this.pageNumber <= 1
             }
         },
         computed: {
@@ -51,7 +61,7 @@
                     pokemon.types.forEach(el=>SinglePokemonTypes.push(el.type.name))
                     return pokemon.name.includes(this.findByName.toLowerCase()) && (this.showAll || this.findCheckBox.some(el=> SinglePokemonTypes.includes(el)))
                 })
-            }
+            },
         },
         components:{
             SinglePokemon
@@ -63,20 +73,97 @@
 </script>
 
 <style scoped>
-    .wrapCheckbox{
-        width:507px;
-        hirght:150px;
-    }
-        .checkbox{
-        display:inline-block;
-        width:80px;
-    }
-    /*odtąd zacznają się dobre style*/
-
     .wrapList{
         background-image: url("../../assets/pikachu.jpg");
         background-color: #fed732;
         min-height: 100vh;
+        padding:55px 2%;
+    }
+
+    .wrapCheckbox{
+        height:27px;
+        overflow:hidden;
+        transition:1s;
+        background-color: rgba(254, 215, 50, 0.8);
+        width:calc(100% - 2px);
+        padding:0 2% 2% 2%;
+        border:1px solid gray;
+        border-radius:2px;
+    }
+
+    .wrapCheckbox p{
+        text-align:center;
+        line-height:27px;
+        margin-bottom:5px;
+    }
+
+    .wrapCheckbox label:first-of-type{
+        width:25%;
+        display:block;
+    }
+
+    .checkbox{
+        display:inline-block;
+        width:25%
     }
     
+    .slide{
+        transition:1s;
+        height:160px;
+    }
+
+    .pokemons{
+        display:flex;
+        flex-wrap:wrap;
+        margin-top:5px;
+    }
+
+    .inputName {
+        position: relative;
+        width: 70%;
+        max-width:280px;
+        height: 40px;
+        line-height: 40px;
+    }
+
+    .inputName label {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        color: #aaa;
+        transition: 0.2s all;
+        cursor: text;
+    }
+
+    .inputName input {
+        width: 100%;
+        background-color:transparent;
+        border: 0;
+        outline: 0;
+        box-shadow: none;
+        padding: 5px 0;
+        border-bottom: 1px solid #aaa;
+        color:rgb(32, 35, 41);
+    }
+    
+    input:focus,
+    input:valid{
+        border-color: #3b659b;
+    }
+
+    input:focus~label,
+    input:valid~label {
+        font-size: 14px;
+        top: -15px;
+        color: #3b659b;
+    }
+
+    button{
+        width:80px;
+        margin:3px;
+        padding:5px 0;
+        border-radius:20px;
+        border:1px solid #3b659b;
+    }
 </style>
