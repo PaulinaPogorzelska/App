@@ -12,7 +12,7 @@
     </div>
         <div class="wrapCheckbox" :class={slide:checkboxActive}>
             <p @click="checkboxActive=!checkboxActive">Choose type <i class="fas fa-chevron-down" :class={turnArrow:checkboxActive}></i></p>
-            <label><input type="checkbox" v-model="showAll">show all</label>
+            <label @click="resetPage"><input type="checkbox" v-model="showAll">show all</label>
             <label v-for="type in pokemonTypes" class="checkbox" :for="type"  @click="resetPage"><input type="checkbox" :value="type" v-model="findCheckBox">{{type}}</label>
         </div>
     </transition>
