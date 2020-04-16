@@ -7,7 +7,6 @@ export default {
     },
     getters: {
         getPokemons: state => state.pokemons,
-        getFavouritesPokemons: state => state.pokemons.filter(el => el.isFavourite === true),
         isFavouritePokemon: state => pokemonId => state.pokemons.find(el => el.id == pokemonId).isFavourite
     },
     mutations: {
