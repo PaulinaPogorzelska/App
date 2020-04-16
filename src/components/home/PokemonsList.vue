@@ -43,7 +43,6 @@
         methods: {
             resetPage(){
                 this.pageNumber=1
-                console.log(this.pageNumber)
             },
             paginatedData(){
                 let start = (this.pageNumber * this.size) - this.size;
